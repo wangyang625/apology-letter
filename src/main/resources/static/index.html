@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>给最重要的人</title>
+
+    <style>
+        body {
+            margin:0;
+            background-image:url("photo.jpg");
+            background-size:cover;
+            background-position:center;
+            color:white;
+            text-align:center;
+            font-family:"Microsoft YaHei";
+
+        }
+
+        .overlay{
+            background:rgba(0,0,0,0.5);
+            height:100vh;
+            padding-top:80px;
+        }
+
+        button{
+            padding:15px 40px;
+            font-size:18px;
+            margin:20px;
+            border:none;
+            border-radius:8px;
+            cursor:pointer;
+            position:relative;
+        }
+
+        #no{
+            position:absolute;
+        }
+
+        #forgive{background:pink;}
+        #no{background:gray;}
+    </style>
+</head>
+
+<body>
+
+<audio id="bgm" loop>
+    <source src="/music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+    document.addEventListener("click", function () {
+        const audio = document.getElementById("bgm");
+        audio.load();
+        audio.play().catch(() => {});
+    }, { once: true });
+</script>
+
+
+<div class="overlay">
+
+    <h1>今天是我们在一起的第 <span id="days"></span> 天</h1>
+
+    <p id="text" style="width:60%;margin:auto;font-size:20px;"></p>
+
+    <button id="forgive" onclick="send('原谅你啦,小宝宝,亲亲')">原谅我</button>
+    <button id="no" onclick="startMoving()">再考虑一下</button>
+
+</div>
+
+<script>
+    let start = new Date("2025-09-24");
+    let now = new Date();
+    let diff = Math.floor((now-start)/(1000*60*60*24));
+    document.getElementById("days").innerText = diff;
+
+    let content = "亲爱的王欣蕊同学，这次是我做得不对。我真在话说出去的一瞬间就认识到了自己的错误，我也非常渴望去改变。我不想因为自己的不经大脑的话失去你。" +
+        "我在努力的组织我的语言宝宝,因为我姐夫睡觉了所以我把灯关了,有点暗,我看不太清,脑子不太清晰,如果有些话说的不太对的话,宝宝你不要因为我生气," +
+        "宝宝我知道我自己做的有多不对,所以我心理特别的难受,我自己都这么难受,可想而知你的有多伤心,我在家人那没有维护你的地位,emm,我不知道应该用个什么词" +
+        ",但是我是完完全全的认识到错误了,其实我知道宝宝你为啥要和我续火花,你有很用心的维持我们的小火花,那同样也是你在意我的方式," +
+        "我其实平时都是跟你开玩笑的,我也喜欢这个小仪式感,我其实还是怕伤感情把,因为我怕把它看得太重了,就会觉得火花短了=感情断了(但是我知道的你就对不会这样,对吧:>)" +
+        "我不应该拿这么重要的事情说出这么令人寒心的话,宝宝,我还是太不成熟了,在做人做事方面都还没有达到一个合格的标准,你让我写检讨是帮我,我很愿意很开心," +
+        "其实在这个过程中我也能得到提升,就连编码能力都得到了提升,悄悄告诉你个秘密,我学习了新的知识哦,你选择了什么都会通过邮件的方式发送到我的qq邮箱,嘿嘿嘿" +
+        "经过这次教训,我以后一定会改,不会说这种令人寒心的话,你在我心中的地位永远是Number One! 但是事情显然不能这么轻易的结束,我知道会给你内心造成很大的创伤" +
+        ",我绝对不会这么简单就让你原谅我,苏格拉底-峰说过:这不是啥坏事,这是天大的好事,你想想,他都犯错了,那以后你犯点啥错,做点过分的事,他以前那么过分,他敢跟你吆五喝六的吗" +
+        ",所以宝宝,给我机会好不好,我也在慢慢的变成熟,哈哈哈哈,其实我就是那种小孩心性,乐意闹,也总惹祸,只图自己开心,现在有了你,我也有在努力的改变,宝宝" +
+        "我们一起变好,咱也谈了挺久了,我希望我们能谈到天荒地老,虽然中间会有曲折会有摩擦,但我们的爱永不变质,我爱你宝宝,小小蕊,说这么多,不为原谅,仅为表达我的歉意" +
+        "\n\n\n" +
+        "--------永远爱你的小羊";
+
+
+    let i=0;
+    let speed=40;
+    function type(){
+        if(i<content.length){
+            document.getElementById("text").innerHTML +=
+                content.charAt(i) === "\n" ? "<br>" : content.charAt(i);
+
+            i++;
+            setTimeout(type,speed);
+        }
+    }
+    type();
+
+    let clicked=false;
+    let moveInterval;
+
+    // 页面加载完成后立即开始移动按钮
+    window.onload = function() {
+        startMoving();
+    };
+
+    function startMoving(){
+        const button = document.getElementById('no');
+        
+        // 清除之前的定时器（如果有）
+        if(moveInterval){
+            clearInterval(moveInterval);
+        }
+        
+        // 每500毫秒移动一次按钮
+        moveInterval = setInterval(() => {
+            // 计算屏幕可用空间
+            const maxX = window.innerWidth - button.offsetWidth;
+            const maxY = window.innerHeight - button.offsetHeight;
+            
+            // 生成随机位置
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+            
+            // 设置按钮位置
+            button.style.left = randomX + 'px';
+            button.style.top = randomY + 'px';
+        }, 500);
+    }
+
+    function send(result){
+        console.log("按钮被点击了：" + result);
+
+        fetch("/choice?result=" + result)
+            .then(response => {
+                console.log("接口返回状态:", response.status);
+                return response.text();
+            })
+            .then(data => {
+                console.log("接口返回数据:", data);
+            })
+            .catch(error => {
+                console.error("请求失败:", error);
+            });
+    }
+</script>
+
+</body>
+</html>

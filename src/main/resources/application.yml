@@ -1,0 +1,24 @@
+server:
+  port: 8080
+
+spring:
+  mail:
+    host: smtp.163.com
+    port: 465
+    username: m18645541744@163.com
+    password: WBPzx32jjXGTLu5E
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          auth: true         # 开启认证
+          ssl:
+            enable: true    # 开启SSL加密（必须）
+            required: true
+          socketFactory:
+            port: 465
+            class: javax.net.ssl.SSLSocketFactory
+          # 超时配置，避免卡顿
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
